@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- 1. 문자 인코딩 설정: 한글과 중국어(간체)가 깨지지 않도록 UTF-8로 지정합니다. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한중다리 (韩中桥) - 한·중 언어교환 동아리</title>
+
+  <style>
+    /* ========================================================
+       2. 스타일(CSS) 영역
+       외부 폰트나 라이브러리 없이, OS 기본 폰트를 활용해 가볍고 깔끔하게 디자인합니다.
+       ======================================================== */
+    :root {
+      --primary-color: #2b6cb0;       /* 메인 블루 */
+      --primary-hover: #1a4971;       /* 버튼 호버 색상 */
+      --accent-color: #c53030;        /* 포인트 레드(중국 교류 느낌) */
+      --bg-color: #f7fafc;            /* 페이지 배경색 */
+      --card-bg: #ffffff;             /* 카드 및 테이블 배경 */
+      --text-main: #2d3748;           /* 본문 텍스트 */
+      --text-sub: #718096;            /* 중국어 번역 및 보조 텍스트 */
+      --border-color: #e2e8f0;        /* 테두리 색상 */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Malgun Gothic", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      padding: 40px 30px;
+    }
+
+    /* 헤더 및 한 줄 소개 */
+    header {
+      text-align: center;
+      margin-bottom: 45px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 25px;
+    }
+
+    .brand-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+    }
+
+    .brand-title-cn {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .intro-slogan {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .intro-slogan-cn {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    /* 공통 섹션 제목 */
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .section-title-cn {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    /* 섹션 1: 주요 활동 카드 3개 */
+    .activities-section {
+      margin-bottom: 45px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .activity-card {
+      background: #fafbfc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      border-color: var(--primary-color);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+
+    .card-title-cn {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      word-break: keep-all;
+    }
+
+    /* 섹션 2: 이번 달 활동 일정 표 */
+    .schedule-section {
+      margin-bottom: 45px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: #edf2f7;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .th-sub, .td-sub {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      font-weight: normal;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    /* 섹션 3: 하단 가입 문의 버튼 및 메시지 */
+    .contact-section {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .btn-contact {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-contact:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-contact:active {
+      transform: scale(0.98);
+    }
+
+    /* 클릭 후 나타나는 안내 메시지 상자 */
+    .contact-message-box {
+      display: none; /* 기본 상태: 숨김 */
+      margin-top: 20px;
+      padding: 16px 20px;
+      background-color: #ebf8ff;
+      border: 1px solid #bee3f8;
+      border-radius: 8px;
+      color: #2b6cb0;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .contact-message-box.active {
+      display: block; /* 클릭 시 표시 */
+    }
+
+    .contact-msg-kr {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .contact-msg-cn {
+      font-size: 0.9rem;
+      color: #4a5568;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 반응형 모바일 대응 */
+    @media (max-width: 600px) {
+      .container {
+        padding: 24px 16px;
+      }
+      .brand-title {
+        font-size: 1.8rem;
+      }
+      th, td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 헤더 영역: 동아리 이름 및 한 줄 소개 -->
+    <header>
+      <h1 class="brand-title">한중다리</h1>
+      <div class="brand-title-cn">韩中桥 · 韩中语言交流社团</div>
+      <p class="intro-slogan">한국어와 중국어를 서로 가르치며 함께 성장합니다</p>
+      <p class="intro-slogan-cn">互相教授韩语和中文，共同成长</p>
+    </header>
+
+    <!-- 1. 하는 일 3개 (카드 형태) -->
+    <section class="activities-section">
+      <div class="section-title-wrap">
+        <h2 class="section-title">주요 활동</h2>
+        <div class="section-title-cn">主要活动</div>
+      </div>
+
+      <div class="card-grid">
+        <!-- 카드 1 -->
+        <div class="activity-card">
+          <div class="card-icon">🗣️</div>
+          <h3 class="card-title">주간 언어교환</h3>
+          <div class="card-title-cn">每周语言交换</div>
+          <p class="card-desc">한국어와 중국어로 번갈아 대화하며 자연스러운 회화 실력을 키웁니다.</p>
+        </div>
+
+        <!-- 카드 2 -->
+        <div class="activity-card">
+          <div class="card-icon">📖</div>
+          <h3 class="card-title">전공 과제 스터디</h3>
+          <div class="card-title-cn">专业课作业研讨</div>
+          <p class="card-desc">어려운 수업 내용과 과제를 한국 학생과 유학생이 함께 고민하고 해결합니다.</p>
+        </div>
+
+        <!-- 카드 3 -->
+        <div class="activity-card">
+          <div class="card-icon">🥟</div>
+          <h3 class="card-title">문화 체험 행사</h3>
+          <div class="card-title-cn">文化体验活动</div>
+          <p class="card-desc">전통 음식 만들기, 명절 행사, 영화 감상 등을 통해 양국 문화를 깊이 이해합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 이번 달 활동 일정 3개 (표 형태) -->
+    <section class="schedule-section">
+      <div class="section-title-wrap">
+        <h2 class="section-title">이번 달 활동 일정</h2>
+        <div class="section-title-cn">本月活动日程</div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                날짜
+                <span class="th-sub">日期</span>
+              </th>
+              <th>
+                활동
+                <span class="th-sub">活动</span>
+              </th>
+              <th>
+                장소
+                <span class="th-sub">地点</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                11월 7일 (목) 18:00
+                <span class="td-sub">11月7日 (周四)</span>
+              </td>
+              <td>
+                11월 정기 언어교환 세션 (일상 회화)
+                <span class="td-sub">11月常规语言交换 (日常会话)</span>
+              </td>
+              <td>
+                학생회관 세미나실 301호
+                <span class="td-sub">学生会馆 研讨室301</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                11월 14일 (목) 19:00
+                <span class="td-sub">11月14日 (周四)</span>
+              </td>
+              <td>
+                중간고사 이후 전공 스터디 및 멘토링
+                <span class="td-sub">期中考后专业研讨与答疑</span>
+              </td>
+              <td>
+                중앙도서관 그룹스터디룸 B
+                <span class="td-sub">中央图书馆 小组学习室B</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                11월 23일 (토) 14:00
+                <span class="td-sub">11月23日 (周六)</span>
+              </td>
+              <td>
+                한중 전통 음식 만들기 문화 교류회
+                <span class="td-sub">韩中传统美食制作与文化交流</span>
+              </td>
+              <td>
+                학생식당 조리실습실
+                <span class="td-sub">学生餐厅 料理实习室</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. 하단 가입 문의 버튼 및 메시지 영역 -->
+    <section class="contact-section">
+      <button type="button" id="contactBtn" class="btn-contact">
+        가입 문의 (入会咨询)
+      </button>
+
+      <!-- 클릭 시 노출되는 메시지 -->
+      <div id="contactMessageBox" class="contact-message-box" role="alert">
+        <p class="contact-msg-kr">가입 문의는 동아리 회장에게 전달해 주세요.</p>
+        <p class="contact-msg-cn">入会咨询请联系社长。</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========================================================
+       3. 자바스크립트(JS) 영역
+       버튼 클릭 시 메시지 상자를 부드럽게 표시합니다.
+       ======================================================== -->
+  <script>
+    // 문서 로드가 완료된 후 동작하도록 설정
+    document.addEventListener('DOMContentLoaded', function () {
+      const contactBtn = document.getElementById('contactBtn');
+      const messageBox = document.getElementById('contactMessageBox');
+
+      // 버튼 클릭 이벤트 리스너
+      contactBtn.addEventListener('click', function () {
+        // 이미 열려있지 않다면 active 클래스를 추가하여 표시
+        if (!messageBox.classList.contains('active')) {
+          messageBox.classList.add('active');
+        } else {
+          // 다시 누르면 닫히도록 토글 효과 지원
+          messageBox.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
